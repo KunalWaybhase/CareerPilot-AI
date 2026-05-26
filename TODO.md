@@ -1,39 +1,41 @@
 # Milestones
 
-[ ] Project Setup
+## Phase 1 - Foundation
 
-[ ] Frontend Setup
+- [ ] Frontend Setup
+- [ ] Backend Setup
+- [ ] PostgreSQL Connection
+- [ ] User Registration
+- [ ] User Login
+- [ ] JWT Authentication
+- [ ] Protected Routes
 
-[ ] Backend Setup
+## Phase 2 - Resume Analysis
 
-[ ] PostgreSQL Setup
+- [ ] Resume Upload
+- [ ] Resume Parsing
+- [ ] ATS Score
+- [ ] Skill Extraction
 
-[ ] User Registration
+## Phase 3 - Career Intelligence
 
-[ ] User Login
+- [ ] Skill Gap Analysis
+- [ ] Career Readiness
+- [ ] Learning Roadmap
 
-[ ] JWT Authentication
+## Phase 4 - Interview System
 
-[ ] Protected Routes
+- [ ] HR Interview
+- [ ] Technical Interview
+- [ ] Voice Interview
 
-[ ] Dashboard UI
+## Phase 5 - Analytics
 
-[ ] Resume Upload
+- [ ] Progress Dashboard
+- [ ] Reports
+- [ ] Performance Tracking
 
-[ ] Resume Parsing
+## Phase 6 - Deployment
 
-[ ] ATS Analysis
-
-[ ] Skill Gap Analysis
-
-[ ] Roadmap Generator
-
-[ ] Interview Simulator
-
-[ ] Voice Interview
-
-[ ] Analytics
-
-[ ] Docker
-
-[ ] Deployment
+- [ ] Docker
+- [ ] AWS Deployment
