@@ -1,27 +1,19 @@
-import { Link } from 'react-router-dom'
+import { Nav } from "../components/landing/Nav"
+import { Hero } from "../components/landing/Hero"
+import { Features } from "../components/landing/Features"
+import { Footer } from "../components/landing/Footer"
+import { SkillGap } from "../components/landing/SkillGap"
+import { InterviewPreview } from "../components/landing/InterviewPreview"
 
 const LandingPage = () => {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-slate-900 text-white">
-      <h1 className="text-5xl font-bold">CareerPilot AI</h1>
-
-      <p className="mt-4 text-xl text-slate-300">
-        AI-Powered Placement Preparation Platform
-      </p>
-
-      <div className="mt-8 flex gap-4">
-        <Link to="/login">
-          <button className="rounded-lg bg-blue-600 px-6 py-3 hover:bg-blue-700">
-            Login
-          </button>
-        </Link>
-
-        <Link to="/signup">
-          <button className="rounded-lg border border-white px-6 py-3 hover:bg-white hover:text-black">
-            Sign Up
-          </button>
-        </Link>
-      </div>
+    <div className="bg-black text-white">
+      <Nav />
+      <Hero />
+      <Features />
+      <SkillGap />
+    <InterviewPreview />
+      <Footer />
     </div>
   )
 }
