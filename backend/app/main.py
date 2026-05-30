@@ -1,3 +1,4 @@
+from app.api.auth import router as auth_router
 from fastapi import FastAPI
 
 from app.database.base import Base
@@ -13,7 +14,7 @@ app = FastAPI(
 
 # Create tables automatically
 Base.metadata.create_all(bind=engine)
-
+app.include_router(auth_router)
 @app.get("/")
 def root():
     return {
