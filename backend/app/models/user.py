@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, DateTime
 
 from app.database.base import Base
 
@@ -37,3 +37,13 @@ class User(Base):
     github_url = Column(String, nullable=True)
 
     target_role = Column(String, nullable=True)
+
+    resume_path = Column(
+        String,
+        nullable=True
+    )
+
+    resume_uploaded_at = Column(
+        DateTime,
+        nullable=True
+    )
