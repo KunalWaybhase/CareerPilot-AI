@@ -21,3 +21,19 @@ class User(Base):
         String,
         nullable=False
     )
+
+    college = Column(String, nullable=True)
+
+    branch = Column(String, nullable=True)
+
+    graduation_year = Column(Integer, nullable=True)
+
+    semester = Column(Integer, nullable=True)
+
+    cgpa = Column(String, nullable=True)
+
+    linkedin_url = Column(String, nullable=True)
+
+    github_url = Column(String, nullable=True)
+
+    target_role = Column(String, nullable=True)
