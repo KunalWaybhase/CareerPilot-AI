@@ -1,12 +1,13 @@
+from app.core.jwt_handler import create_access_token
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-
+from fastapi.security import OAuth2PasswordRequestForm
+from app.database.dependencies import ( get_db, get_current_user )
 from app.database.dependencies import get_db
 from app.models.user import User
 from app.schemas.user import (
     UserCreate,
-    UserResponse,
-    UserLogin
+    UserResponse   
 )
 from app.core.security import (
     hash_password,
@@ -64,13 +65,13 @@ def signup(
     return new_user
 @router.post("/login")
 def login(
-    user: UserLogin,
+    form_data: OAuth2PasswordRequestForm = Depends(),
     db: Session = Depends(get_db)
 ):
 
     db_user = (
         db.query(User)
-        .filter(User.email == user.email)
+        .filter(User.email == form_data.username)
         .first()
     )
 
@@ -81,7 +82,7 @@ def login(
         )
 
     if not verify_password(
-        user.password,
+        form_data.password,
         db_user.hashed_password
     ):
         raise HTTPException(
@@ -89,8 +90,27 @@ def login(
             detail="Invalid credentials"
         )
 
+    access_token = create_access_token(
+        data={
+            "sub": db_user.email,
+            "user_id": db_user.id
+        }
+    )
+
     return {
-        "message": "Login successful",
-        "user_id": db_user.id,
-        "email": db_user.email
+        "access_token": access_token,
+        "token_type": "bearer"
     }
+@router.get("/profile")
+def profile(
+    current_user=Depends(
+        get_current_user
+    )
+):
+    return current_user
+
+@router.get("/verify-token")
+def verify(
+    current_user=Depends(get_current_user)
+):
+    return current_user
