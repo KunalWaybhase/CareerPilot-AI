@@ -3,6 +3,12 @@ from sqlalchemy.orm import Session
 from datetime import datetime
 import shutil
 import os
+from app.services.ats_analyzer import (
+    analyze_resume
+)
+from app.services.skill_extractor import (
+    extract_skills
+)
 from app.services.resume_parser import (
     extract_text_from_pdf
 )
@@ -91,4 +97,59 @@ def parse_resume(
 
     return {
         "resume_text": text[:3000]
+    }
+@router.get("/analyze")
+def analyze_uploaded_resume(
+    current_user=Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+
+    user = (
+        db.query(User)
+        .filter(
+            User.id == current_user["user_id"]
+        )
+        .first()
+    )
+
+    if not user.resume_path:
+        return {
+            "error": "No resume uploaded"
+        }
+
+    text = extract_text_from_pdf(
+        user.resume_path
+    )
+
+    result = analyze_resume(text)
+
+    return result
+@router.get("/skills")
+def get_resume_skills(
+    current_user=Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+
+    user = (
+        db.query(User)
+        .filter(
+            User.id == current_user["user_id"]
+        )
+        .first()
+    )
+
+    if not user.resume_path:
+        return {
+            "error": "No resume uploaded"
+        }
+
+    text = extract_text_from_pdf(
+        user.resume_path
+    )
+
+    skills = extract_skills(text)
+
+    return {
+        "skills_found": skills,
+        "count": len(skills)
     }
