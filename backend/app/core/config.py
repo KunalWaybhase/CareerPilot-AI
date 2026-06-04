@@ -9,3 +9,6 @@ ALGORITHM = os.getenv("ALGORITHM")
 ACCESS_TOKEN_EXPIRE_MINUTES = int(
     os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", 30)
 )
+GEMINI_API_KEY = os.getenv(
+    "GEMINI_API_KEY"
+)

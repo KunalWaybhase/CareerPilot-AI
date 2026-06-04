@@ -1,7 +1,9 @@
 from fastapi import APIRouter
 from sqlalchemy.orm import Session
 from fastapi import Depends
-
+from app.services.gemini_service import (
+    generate_ai_roadmap
+)
 from app.database.dependencies import (
     get_db,
     get_current_user
@@ -120,3 +122,54 @@ def get_skill_gap(
     )
 
     return result
+@router.get("/ai-roadmap")
+def generate_personalized_roadmap(
+    current_user=Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+
+    user = (
+        db.query(User)
+        .filter(
+            User.id == current_user["user_id"]
+        )
+        .first()
+    )
+
+    if not user.resume_path:
+        return {
+            "error": "Resume not uploaded"
+        }
+
+    if not user.target_role:
+        return {
+            "error": "Target role not set"
+        }
+
+    text = extract_text_from_pdf(
+        user.resume_path
+    )
+
+    skills_found = extract_skills(text)
+
+    gap_result = analyze_skill_gap(
+        user.target_role,
+        skills_found
+    )
+
+    roadmap = generate_ai_roadmap(
+        target_role=user.target_role,
+        missing_skills=gap_result[
+            "missing_skills"
+        ],
+        readiness_score=gap_result[
+            "readiness_score"
+        ]
+    )
+
+    return {
+        "target_role": user.target_role,
+        "readiness_score":
+            gap_result["readiness_score"],
+        "roadmap": roadmap
+    }
