@@ -7,6 +7,7 @@ from app.api.resume import router as resume_router
 from app.database.database import engine
 from app.api import interview
 from app.api import dashboard
+from app.api import voice_interview
 # Import models so SQLAlchemy sees them
 from app.models import User
 
@@ -23,6 +24,7 @@ app.include_router(roadmap_router)
 app.include_router(resume_router)
 app.include_router(interview.router)
 app.include_router(dashboard.router)
+app.include_router(voice_interview.router)
 @app.get("/")
 def root():
     return {
